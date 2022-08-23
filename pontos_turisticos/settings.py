@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "django_filters",
+    "rest_framework.authtoken",
     "core",
     "atracoes",
     "comentarios",
@@ -132,4 +133,3 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MEDIA_ROOT = "imagens"
 
 MEDIA_URL = "/media/"
-
