@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-from email.policy import default
+
 from pathlib import Path
 from decouple import config
 import os
@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['pontos-turisticos-le.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['pontos-turisticos-le.herokuapp.com', 'localhost:8000']
 
 
 # Application definition
@@ -84,11 +84,11 @@ WSGI_APPLICATION = "pontos_turisticos.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-from dj_database_url import parse as db_url
-default_dburl = 'sqlite:///' + BASE_DIR.joinpath('db.sqlite3').as_posix()
+from dj_database_url import parse as dburl
+default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
 DATABASES = {
-    'default': config('DATABASE_URL', default=default_dburl, cast=db_url),
+    'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
 }
 
 # Password validation
