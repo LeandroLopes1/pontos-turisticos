@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from core.models import PontoTuristico
-from .serializers import PontoTuristicoSerializer
+from core.models import PontoTuristico, Atracao
+from .serializers import PontoTuristicoSerializer, AtracaoSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
@@ -15,6 +15,7 @@ class PontosTuristicosViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
  
     search_fields = ('nome', 'descricao', 'endereco__linha1')
+ 
 
     def get_queryset(self):
         id = self.request.query_params.get('id', None)
@@ -33,4 +34,13 @@ class PontosTuristicosViewSet(viewsets.ModelViewSet):
         pass
         return Response({'teste': 'teste'})
 
-   
+    @action(methods=['post'], detail=True)
+    def associa_atracoes(self, request, pk):
+        atracoes = request.data['ids']
+        ponto = PontoTuristico.objects.get(id=pk)
+        
+        ponto.atracoes.set(atracoes)
+        ponto.save()
+        return Response({'message': 'Atracoes associadas com sucesso!'})
+
+        
